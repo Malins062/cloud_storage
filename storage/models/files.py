@@ -1,8 +1,8 @@
 import os
 from django.contrib.auth import get_user_model
 from django.db import models
-from datetime import datetime
 from django.core.files.storage import FileSystemStorage
+from common.models.mixins import BaseInstanceStorageModel
 from config.settings import MEDIA_ROOT
 from storage.models.folders import Folder
 
@@ -18,13 +18,10 @@ def get_upload_path(instance, filename):
     return f'user_{instance.creator.id}/{filename}'
 
 
-class File(models.Model):
-    id = models.AutoField(unique=True, primary_key=True)
+class File(BaseInstanceStorageModel):
     owner = models.ForeignKey(
         to=User, on_delete=models.CASCADE, related_name='files', verbose_name='Владелец'
     )
-    created_at = models.DateTimeField(default=datetime.now, verbose_name='Дата создания')
-    updated_at = models.DateTimeField(default=datetime.now, verbose_name='Дата изменения')
     # description = models.TextField(verbose_name='Описание файла', blank=True)
     # name = models.CharField(max_length=255, unique=True, verbose_name='Наименование файла')
     file = models.FileField(upload_to=get_upload_path, storage=fs, verbose_name='Файл',)
