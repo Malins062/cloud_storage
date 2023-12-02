@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 from django.forms import BaseInlineFormSet
-from models.files import File
-from models.folders import Folder
+from .models.files import File
+from .models.folders import Folder
 
 
 @admin.register(File)
@@ -68,10 +68,10 @@ class FolderAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super(FolderAdmin, self).get_queryset(request)
-        return qs.filter(creator=request.user)
+        return qs.filter(owner=request.user)
 
     def save_model(self, request, obj, form, change):
-        if getattr(obj, 'creator', None) is None:
+        if getattr(obj, 'owner', None) is None:
             obj.owner = request.user
         obj.save()
 
