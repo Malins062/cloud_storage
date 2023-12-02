@@ -26,7 +26,7 @@ class File(models.Model):
     created_at = models.DateTimeField(default=datetime.now, verbose_name='Дата создания')
     updated_at = models.DateTimeField(default=datetime.now, verbose_name='Дата изменения')
     # description = models.TextField(verbose_name='Описание файла', blank=True)
-    name = models.CharField(max_length=255, unique=True, verbose_name='Наименование файла')
+    # name = models.CharField(max_length=255, unique=True, verbose_name='Наименование файла')
     file = models.FileField(upload_to=get_upload_path, storage=fs, verbose_name='Файл',)
     folder = models.ForeignKey(to=Folder, on_delete=models.CASCADE, verbose_name='Папка', blank=True, null=True)
     # url = models.SlugField(max_length=160, unique=True)
