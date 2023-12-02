@@ -6,6 +6,9 @@ from users.models.managers import CustomUserManager
 class User(AbstractUser):
     phone_number = PhoneNumberField(verbose_name='Телефон', unique=True, null=True)
 
+    # USERNAME_FIELD = 'phone_number'
+    # REQUIRED_FIELDS =
+
     objects = CustomUserManager()
 
     class Meta:
