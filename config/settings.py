@@ -30,12 +30,14 @@ INSTALLED_APPS += [
     'django_filters',
     'corsheaders',
     'djoser',
+    'phonenumber_field',
 ]
 
 # Apps
 INSTALLED_APPS += [
     'api',
     'common',
+    'users',
     'storage',
 ]
 
