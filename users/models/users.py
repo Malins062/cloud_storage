@@ -1,7 +1,11 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from users.models.managers import CustomUserManager
+
+
+class Group(Group):
+    pass
 
 
 class User(AbstractUser):
