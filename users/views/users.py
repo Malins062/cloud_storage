@@ -26,3 +26,22 @@ class RegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = [AllowAny]
     serializer_class = user_s.RegistrationSerializer
+
+
+@extend_schema_view(
+    post=extend_schema(summary='Смена пароля', tags=['Аутентификация & Авторизация']),
+)
+class ChangePasswordView(APIView):
+    serializer_class = user_s.ChangePasswordSerializer
+
+    @staticmethod
+    def post(request):
+        user = request.user
+        serializer = user_s.ChangePasswordSerializer(
+            instance=user, data=request.data
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(HTTP_204_NO_CONTENT)
+

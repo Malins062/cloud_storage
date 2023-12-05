@@ -7,7 +7,7 @@ User = get_user_model()
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField()
+    email = serializers.EmailField(required=True)
     password = serializers.CharField(required=True, write_only=True)
 
     class Meta:
@@ -37,3 +37,33 @@ class RegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
+
+
+class ChangePasswordSerializer(serializers.ModelSerializer):
+    old_password = serializers.CharField(required=True, write_only=True)
+    new_password = serializers.CharField(required=True, write_only=True)
+
+    class Meta:
+        model = User
+        fields = (
+            'old_password',
+            'new_password',
+        )
+
+    def validate(self, attrs):
+        user = self.instance
+        password = attrs.pop('old_password')
+        if not user.check_password(password):
+            raise ParseError('Проверьте правильность текущего пароля.')
+        return attrs
+
+    @staticmethod
+    def validate_new_password(value):
+        validate_password(value)
+        return value
+
+    def update(self, instance, validated_data):
+        password = validated_data.pop('new_password')
+        instance.set_password(password)
+        instance.save()
+        return instance
