@@ -4,10 +4,6 @@ from phonenumber_field.modelfields import PhoneNumberField
 from users.models.managers import CustomUserManager
 
 
-class Group(Group):
-    pass
-
-
 class User(AbstractUser):
     username = models.CharField('Никнейм', max_length=64, unique=True, null=True, blank=True)
     email = models.EmailField('Почта', unique=True, null=True, blank=True)
