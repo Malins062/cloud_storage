@@ -149,7 +149,7 @@ CORS_ALLOW_HEADERS = ['*']
 CSRF_COOKIE_SECURE = False
 
 ################################
-# SATIC & MEDIA
+# STATIC & MEDIA
 ################################
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
