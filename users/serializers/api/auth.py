@@ -52,7 +52,7 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         user = self.instance
-        password = attrs.pop('old_password')
+        password = attrs.pop('old_password') if 'old_password' in attrs else None
         if not user.check_password(password):
             raise ParseError('Проверьте правильность текущего пароля.')
         return attrs
@@ -63,7 +63,21 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
         return value
 
     def update(self, instance, validated_data):
-        password = validated_data.pop('new_password')
+        password = validated_data.pop('new_password') if 'new_password' in validated_data else None
         instance.set_password(password)
         instance.save()
         return instance
+
+
+class ProfileListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = '__all__'

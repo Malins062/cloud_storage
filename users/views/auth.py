@@ -14,7 +14,7 @@ from rest_framework.viewsets import ModelViewSet
 
 # from common.views.mixins import ListViewSet
 # from users.permissions import IsNotCorporate
-from users.serializers.api import users as user_s
+from users.serializers.api import auth as user_s
 
 User = get_user_model()
 
@@ -44,4 +44,3 @@ class ChangePasswordView(APIView):
         serializer.save()
 
         return Response(HTTP_204_NO_CONTENT)
-
