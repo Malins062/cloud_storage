@@ -1,28 +1,33 @@
 import os
 from django.contrib.auth import get_user_model
 from django.db import models
-from datetime import datetime
+from mptt.fields import TreeForeignKey
+from mptt.models import MPTTModel
 
-from common.models.mixins import BaseInstanceStorageModel
+from common.models.mixins import InfoModelMixin
 
 # User
 User = get_user_model()
 
 
-class Folder(BaseInstanceStorageModel):
-    id = models.AutoField(unique=True, primary_key=True)
+class Folder(InfoModelMixin, MPTTModel):
     owner = models.ForeignKey(
         to=User, on_delete=models.CASCADE, related_name='folders', verbose_name='Владелец'
     )
-    name = models.CharField(max_length=255, verbose_name='Папка')
-    parent_id = models.IntegerField(verbose_name='Родительский каталог', blank=True, null=True)
-    # url = models.SlugField(max_length=160, unique=True)
-    # files = models.ManyToManyField(File, verbose_name='Файлы', related_name='folders', through='FileScope')
+    name = models.CharField(verbose_name='Наименование', max_length=255, blank=False, null=False, )
+    parent = TreeForeignKey(to='self', on_delete=models.CASCADE,
+                            null=True, blank=True, related_name='children', )
 
-    class Meta:
+    # class Meta:
+    #     verbose_name = 'Папка'
+    #     verbose_name_plural = 'Папки'
+    #     ordering = ['name']
+
+    class MPTTMeta:
         verbose_name = 'Папка'
         verbose_name_plural = 'Папки'
         ordering = ['name']
+        order_insertion_by = ['name']
 
     def __str__(self):
         return self.name
