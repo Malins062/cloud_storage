@@ -8,18 +8,18 @@ from .models.folders import Folder
 
 @admin.register(File)
 class FileAdmin(admin.ModelAdmin):
-    list_display = ['id', 'file', 'created_at', 'folder', ]
+    list_display = ['id', 'file', 'created_at', ]
     list_display_links = ['id', 'created_at', ]
-    list_filter = ['file', 'created_at', 'folder', ]
-    search_fields = ['file', 'created_at', 'folder', ]
-    ordering = ['folder', 'file']
+    list_filter = ['file', 'created_at', ]
+    search_fields = ['file', 'created_at', ]
+    ordering = ['file']
     exclude = ('owner', )
     list_per_page = 10
 
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(FileAdmin, self).get_form(request, obj, **kwargs)
-        form.base_fields['folder'].queryset = Folder.objects.filter(owner=request.user)
-        return form
+    # def get_form(self, request, obj=None, **kwargs):
+    #     form = super(FileAdmin, self).get_form(request, obj, **kwargs)
+    #     form.base_fields['folder'].queryset = Folder.objects.filter(owner=request.user)
+    #     return form
 
     def get_queryset(self, request):
         qs = super(FileAdmin, self).get_queryset(request)
