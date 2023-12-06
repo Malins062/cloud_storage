@@ -29,8 +29,8 @@ class InfoModelMixin(DateModelMixin):
         User, models.SET_NULL,
         related_name='updated_%(app_label)s_%(class)s',
         verbose_name='Кем изменено', null=True, )
-    name = models.CharField(verbose_name='Наименование', max_length=255, )
-    description = models.TextField(verbose_name='Описание', max_length=255, blank=True, default=None, )
+    description = models.TextField(verbose_name='Описание', max_length=255,
+                                   blank=True, default=None, null=True, )
 
     class Meta:
         abstract = True
@@ -46,10 +46,3 @@ class InfoModelMixin(DateModelMixin):
         self.updated_by = user
         return super().save(*args, **kwargs)
 
-
-class DescriptionModelMixin(models.Model):
-    name = models.CharField(verbose_name='Наименование', max_length=255, )
-    description = models.TextField(verbose_name='Описание', max_length=255, blank=True, default=None, )
-
-    class Meta:
-        abstract = True
