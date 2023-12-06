@@ -9,7 +9,7 @@ class User(AbstractUser):
     phone_number = PhoneNumberField(verbose_name='Телефон', unique=True, null=True, blank=True)
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
+    REQUIRED_FIELDS = ['email', 'first_name', 'last_name', ]
 
     objects = CustomUserManager()
 
@@ -24,4 +24,4 @@ class User(AbstractUser):
     full_name.fget.short_description = 'Полное имя'
 
     def __str__(self):
-        return f'{self.full_name} ({self.pk})'
+        return f'{self.full_name} #{self.pk}'
