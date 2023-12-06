@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.core.files.storage import FileSystemStorage
 from mptt.fields import TreeForeignKey
+from mptt.models import MPTTModel
 
 from common.models.mixins import InfoModelMixin
 from config.settings import MEDIA_ROOT
@@ -19,7 +20,7 @@ def get_upload_path(instance, filename):
     return f'user_{instance.creator.id}/{filename}'
 
 
-class File(InfoModelMixin):
+class File(InfoModelMixin, MPTTModel):
     owner = models.ForeignKey(to=User, on_delete=models.CASCADE,
                               related_name='files', verbose_name='Владелец', )
     file = models.FileField(verbose_name='Файл', null=False, blank=False,
@@ -31,6 +32,9 @@ class File(InfoModelMixin):
         verbose_name = 'Файл'
         verbose_name_plural = 'Файлы'
         ordering = ['-created_at']
+
+    class MPTTMeta:
+        order_insertion_by = ['file']
 
     def __str__(self):
         return self.file.name

@@ -14,7 +14,8 @@ class FileAdmin(admin.ModelAdmin):
     search_fields = ['file', 'created_at', ]
     ordering = ['file']
     exclude = ('owner', )
-    list_per_page = 10
+    readonly_fields = ['created_at', 'created_by', 'updated_at', 'updated_by', ]
+    list_per_page = 20
 
     # def get_form(self, request, obj=None, **kwargs):
     #     form = super(FileAdmin, self).get_form(request, obj, **kwargs)
@@ -58,8 +59,9 @@ class FolderAdmin(admin.ModelAdmin):
     ordering = ['parent_id', 'name']
     # inlines = [FolderScopeInline]
     exclude = ('owner', )
+    readonly_fields = ['created_at', 'created_by', 'updated_at', 'updated_by', ]
     actions = ['set_parent_folder']
-    list_per_page = 10
+    list_per_page = 20
 
     # def get_form(self, request, obj=None, **kwargs):
     #     form = super(FolderAdmin, self).get_form(request, obj, **kwargs)

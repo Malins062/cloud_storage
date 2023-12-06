@@ -29,8 +29,6 @@ class InfoModelMixin(DateModelMixin):
         User, models.SET_NULL,
         related_name='updated_%(app_label)s_%(class)s',
         verbose_name='Кем изменено', null=True, )
-    description = models.TextField(verbose_name='Описание', max_length=255,
-                                   blank=True, default=None, null=True, )
 
     class Meta:
         abstract = True

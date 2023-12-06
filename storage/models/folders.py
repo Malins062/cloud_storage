@@ -18,15 +18,12 @@ class Folder(InfoModelMixin, MPTTModel):
     parent = TreeForeignKey(to='self', on_delete=models.CASCADE,
                             null=True, blank=True, related_name='children', )
 
-    # class Meta:
-    #     verbose_name = 'Папка'
-    #     verbose_name_plural = 'Папки'
-    #     ordering = ['name']
-
-    class MPTTMeta:
+    class Meta:
         verbose_name = 'Папка'
         verbose_name_plural = 'Папки'
         ordering = ['name']
+
+    class MPTTMeta:
         order_insertion_by = ['name']
 
     def __str__(self):
