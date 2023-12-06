@@ -31,6 +31,7 @@ INSTALLED_APPS += [
     'corsheaders',
     'djoser',
     'phonenumber_field',
+    'mptt',
 ]
 
 # Apps
