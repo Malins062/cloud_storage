@@ -7,7 +7,7 @@ class CustomUserManager(BaseUserManager):
 
     def _create_user(self, phone_number=None, email=None, password=None, username=None, **extra_fields):
         if not (email or phone_number or username):
-            raise ParseError('Укажите e-mail или телефон!')
+            raise ParseError('Укажите никнейм, адрес электронной почты или телефон!')
 
         if email:
             email = self.normalize_email(email)
