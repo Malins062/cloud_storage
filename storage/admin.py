@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 from django.forms import BaseInlineFormSet
+from mptt.admin import MPTTModelAdmin
+
 from .models.files import File
 from .models.folders import Folder
 
@@ -50,13 +52,13 @@ class FolderScopeInline(admin.TabularInline):
 
 
 @admin.register(Folder)
-class FolderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'parent_id', 'name', ]
-    list_display_links = ['id', ]
-    list_editable = ['name']
+class FolderAdmin(MPTTModelAdmin):
+    list_display = ['id', 'parent_id', 'name', 'created_at', 'created_by', 'updated_at', 'updated_by', ]
+    list_display_links = ['id', 'name', ]
+    # list_editable = ['name']
     list_filter = ['name', ]
     search_fields = ['name', ]
-    ordering = ['parent_id', 'name']
+    ordering = ['tree_id', 'level', 'name']
     # inlines = [FolderScopeInline]
     exclude = ('owner', )
     readonly_fields = ['created_at', 'created_by', 'updated_at', 'updated_by', ]
@@ -68,10 +70,10 @@ class FolderAdmin(admin.ModelAdmin):
     #     form.base_fields['parent_id'].queryset = Folder.objects.filter(creator=request.user, parent_id__isnull=True)
     #     return form
 
-    def get_queryset(self, request):
-        qs = super(FolderAdmin, self).get_queryset(request)
-        return qs.filter(owner=request.user)
-
+    # def get_queryset(self, request):
+    #     qs = super(FolderAdmin, self).get_queryset(request)
+    #     return qs.filter(owner=request.user)
+    #
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'owner', None) is None:
             obj.owner = request.user
