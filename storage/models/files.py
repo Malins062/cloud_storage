@@ -7,6 +7,7 @@ from mptt.models import MPTTModel
 
 from common.models.mixins import InfoModelMixin
 from config.settings import MEDIA_ROOT
+from storage.models.folders import Folder
 
 # Path to file storage
 fs = FileSystemStorage(location=os.path.join(MEDIA_ROOT, 'fs'))
@@ -25,8 +26,8 @@ class File(InfoModelMixin, MPTTModel):
                               related_name='files', verbose_name='Владелец', )
     file = models.FileField(verbose_name='Файл', null=False, blank=False,
                             upload_to=get_upload_path, storage=fs, )
-    parent = TreeForeignKey(to='self', on_delete=models.CASCADE,
-                            null=True, blank=True, related_name='children', )
+    parent = TreeForeignKey(to=Folder, on_delete=models.CASCADE,
+                            null=True, blank=True, related_name='folder', )
 
     class Meta:
         verbose_name = 'Файл'

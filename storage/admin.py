@@ -53,12 +53,23 @@ class FolderScopeInline(admin.TabularInline):
 
 @admin.register(Folder)
 class FolderAdmin(MPTTModelAdmin):
-    list_display = ['id', 'parent_id', 'name', 'created_at', 'created_by', 'updated_at', 'updated_by', ]
-    list_display_links = ['id', 'name', ]
+    list_display = [
+        # 'id', 'parent_id', 'tree_id', 'level',
+
+        'name',
+        'created_at',
+        'created_by',
+        'updated_at',
+        'updated_by',
+    ]
+    list_display_links = [
+        'name',
+    ]
     # list_editable = ['name']
     list_filter = ['name', ]
     search_fields = ['name', ]
-    ordering = ['tree_id', 'level', 'name']
+    ordering = ['tree_id', 'level', 'parent_id', 'name']
+    # ordering = ['name']
     # inlines = [FolderScopeInline]
     exclude = ('owner', )
     readonly_fields = ['created_at', 'created_by', 'updated_at', 'updated_by', ]

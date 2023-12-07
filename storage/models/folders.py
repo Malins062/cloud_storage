@@ -25,5 +25,9 @@ class Folder(InfoModelMixin, MPTTModel):
     class MPTTMeta:
         order_insertion_by = ['name']
 
+    def save(self, *args, **kwargs):
+        super(Folder, self).save(*args, **kwargs)
+        Folder.objects.rebuild()
+
     def __str__(self):
         return self.name
