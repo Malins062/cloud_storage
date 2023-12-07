@@ -20,7 +20,7 @@ User = get_user_model()
 
 
 @extend_schema_view(
-    post=extend_schema(summary='Регистрация пользователя', tags=['Аутентификация & Авторизация']),
+    post=extend_schema(summary='Регистрация пользователя', tags=['Аутентификация и авторизация']),
 )
 class RegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -29,7 +29,7 @@ class RegistrationView(generics.CreateAPIView):
 
 
 @extend_schema_view(
-    post=extend_schema(summary='Смена пароля', tags=['Аутентификация & Авторизация']),
+    post=extend_schema(summary='Смена пароля', tags=['Аутентификация и авторизация']),
 )
 class ChangePasswordView(APIView):
     serializer_class = user_s.ChangePasswordSerializer
