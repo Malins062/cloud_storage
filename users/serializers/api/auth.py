@@ -7,16 +7,24 @@ User = get_user_model()
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(required=True)
+    username = serializers.CharField(required=True, allow_blank=True, allow_null=True)
+    email = serializers.EmailField(
+        required=True,
+        help_text='Адрес электронной почты',
+    )
+    first_name = serializers.CharField(required=True)
+    phone_number = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     password = serializers.CharField(required=True, write_only=True)
 
     class Meta:
         model = User
         fields = (
             'id',
+            'username',
             'first_name',
             'last_name',
             'email',
+            'phone_number',
             'password',
         )
 
@@ -25,9 +33,17 @@ class RegistrationSerializer(serializers.ModelSerializer):
         email = value.lower()
         if User.objects.filter(email=email).exists():
             raise ParseError(
-                'Пользователь с такой почтой уже зарегистрирован.'
+                {'email': [f'Пользователь с адресом электронной почты: {email} - уже зарегистрирован.']}
             )
         return email
+
+    @staticmethod
+    def validate_phone_number(value):
+        if User.objects.filter(phone_number=value).exists():
+            raise ParseError(
+                {'phone_number': [f'Пользователь с телефоном: {value} - уже зарегистрирован.']}
+            )
+        return value
 
     @staticmethod
     def validate_password(value):
@@ -54,7 +70,9 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
         user = self.instance
         password = attrs.pop('old_password') if 'old_password' in attrs else None
         if not user.check_password(password):
-            raise ParseError('Проверьте правильность текущего пароля.')
+            raise ParseError(
+                {'password': ['Проверьте правильность текущего пароля.']}
+            )
         return attrs
 
     @staticmethod

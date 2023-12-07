@@ -5,11 +5,23 @@ from users.models.managers import CustomUserManager
 
 
 class User(AbstractUser):
-    email = models.EmailField('Почта', unique=True, null=True, blank=True)
-    phone_number = PhoneNumberField(verbose_name='Телефон', unique=True, null=True, blank=True)
+    email = models.EmailField(
+        verbose_name='Почта',
+        unique=True, null=False, blank=False,
+        help_text='Обязательное поле.',
+    )
+    first_name = models.CharField(
+        verbose_name='Имя',
+        max_length=30, blank=False, null=False,
+        help_text='Обязательное поле. Не более 30 символов.',
+    )
+    phone_number = PhoneNumberField(
+        verbose_name='Телефон',
+        unique=True, null=True, blank=True
+    )
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email', 'first_name', 'last_name', ]
+    REQUIRED_FIELDS = ['email', 'first_name', ]
 
     objects = CustomUserManager()
 
