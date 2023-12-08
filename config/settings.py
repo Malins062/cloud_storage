@@ -33,6 +33,7 @@ INSTALLED_APPS += [
     'phonenumber_field',
     'mptt',
     'django_mptt_admin',
+    'debug_toolbar',
 ]
 
 # Apps
@@ -61,6 +62,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'crum.CurrentRequestUserMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
 ]
 
 ROOT_URLCONF = 'config.urls'

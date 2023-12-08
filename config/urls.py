@@ -7,4 +7,5 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('api/v1/', include('api.urls'), name='api'),
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('__debug__/', include('debug_toolbar.urls')),
 ]
