@@ -18,12 +18,13 @@ User = get_user_model()
 
 # Path to user files
 def get_upload_path(instance, filename):
-    return f'user_{instance.creator.id}/{filename}'
+    return f'user_{instance.created_by.id}/{filename}'
 
 
 class File(InfoModelMixin, MPTTModel):
-    owner = models.ForeignKey(to=User, on_delete=models.CASCADE,
-                              related_name='files', verbose_name='Владелец', )
+    # owner = models.ForeignKey(to=User, on_delete=models.CASCADE,
+    #                           null=False, blank=False,
+    #                           related_name='user', verbose_name='Владелец', )
     file = models.FileField(verbose_name='Файл', null=False, blank=False,
                             upload_to=get_upload_path, storage=fs, )
     parent = TreeForeignKey(to=Folder, on_delete=models.CASCADE,

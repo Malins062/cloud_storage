@@ -10,9 +10,9 @@ User = get_user_model()
 
 
 class Folder(InfoModelMixin, MPTTModel):
-    owner = models.ForeignKey(
-        to=User, on_delete=models.CASCADE, related_name='folders', verbose_name='Владелец'
-    )
+    # owner = models.ForeignKey(
+    #     to=User, on_delete=models.CASCADE, related_name='folders', verbose_name='Владелец'
+    # )
     name = models.CharField(verbose_name='Наименование', max_length=255, blank=False, null=False, )
     parent = TreeForeignKey(to='self', on_delete=models.CASCADE,
                             null=True, blank=True, related_name='children', )

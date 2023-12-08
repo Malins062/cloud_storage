@@ -16,7 +16,7 @@ class FileAdmin(admin.ModelAdmin):
     list_filter = ['file', 'created_at', ]
     search_fields = ['file', 'created_at', ]
     ordering = ['file']
-    exclude = ('owner', )
+    # exclude = ('owner', )
     readonly_fields = ['created_at', 'created_by', 'updated_at', 'updated_by', ]
     list_per_page = 20
 
@@ -25,14 +25,14 @@ class FileAdmin(admin.ModelAdmin):
     #     form.base_fields['folder'].queryset = Folder.objects.filter(owner=request.user)
     #     return form
 
-    def get_queryset(self, request):
-        qs = super(FileAdmin, self).get_queryset(request)
-        return qs.filter(owner=request.user)
-
-    def save_model(self, request, obj, form, change):
-        if getattr(obj, 'owner', None) is None:
-            obj.creator = request.user
-        obj.save()
+    # def get_queryset(self, request):
+    #     qs = super(FileAdmin, self).get_queryset(request)
+    #     return qs.filter(owner=request.user)
+    #
+    # def save_model(self, request, obj, form, change):
+    #     if getattr(obj, 'owner', None) is None:
+    #         obj.creator = request.user
+    #     obj.save()
 
 
 class FolderScopeInlineFormset(BaseInlineFormSet):
