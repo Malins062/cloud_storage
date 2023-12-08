@@ -6,9 +6,9 @@ from users.models.managers import CustomUserManager
 
 class User(AbstractUser):
     email = models.EmailField(
-        verbose_name='Почта',
-        unique=True, null=False, blank=False,
-        help_text='Обязательное поле.',
+        verbose_name='Электронная почта',
+        max_length=320, unique=True, null=False, blank=False,
+        help_text='Адрес электронной почты. Обязательное поле. Не более 320 символов.',
     )
     first_name = models.CharField(
         verbose_name='Имя',
