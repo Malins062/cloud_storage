@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 from django.forms import BaseInlineFormSet
 from mptt.admin import MPTTModelAdmin
+from django_mptt_admin.admin import DjangoMpttAdmin
 
 from .models.files import File
 from .models.folders import Folder
@@ -52,10 +53,9 @@ class FolderScopeInline(admin.TabularInline):
 
 
 @admin.register(Folder)
-class FolderAdmin(MPTTModelAdmin):
+class FolderAdmin(DjangoMpttAdmin):
     list_display = [
         # 'id', 'parent_id', 'tree_id', 'level',
-
         'name',
         'created_at',
         'created_by',
@@ -68,12 +68,12 @@ class FolderAdmin(MPTTModelAdmin):
     # list_editable = ['name']
     list_filter = ['name', ]
     search_fields = ['name', ]
-    ordering = ['tree_id', 'level', 'parent_id', 'name']
+    # ordering = ['tree_id', 'level', 'parent_id', 'name']
     # ordering = ['name']
     # inlines = [FolderScopeInline]
-    exclude = ('owner', )
+    # exclude = ('owner', )
     readonly_fields = ['created_at', 'created_by', 'updated_at', 'updated_by', ]
-    actions = ['set_parent_folder']
+    # actions = ['set_parent_folder']
     list_per_page = 20
 
     # def get_form(self, request, obj=None, **kwargs):
@@ -85,15 +85,15 @@ class FolderAdmin(MPTTModelAdmin):
     #     qs = super(FolderAdmin, self).get_queryset(request)
     #     return qs.filter(owner=request.user)
     #
-    def save_model(self, request, obj, form, change):
-        if getattr(obj, 'owner', None) is None:
-            obj.owner = request.user
-        obj.save()
-
-    @admin.action(description='Сделать выбранные Папки - родителем')
-    def set_parent_folder(self, request, qs: QuerySet):
-        count_updated = qs.update(parent_id=None)
-        self.message_user(
-            request,
-            f'Родительская папка назначена для {count_updated} записи(ей)'
-        )
+    # def save_model(self, request, obj, form, change):
+    #     if getattr(obj, 'owner', None) is None:
+    #         obj.owner = request.user
+    #     obj.save()
+    #
+    # @admin.action(description='Сделать выбранные Папки - родителем')
+    # def set_parent_folder(self, request, qs: QuerySet):
+    #     count_updated = qs.update(parent_id=None)
+    #     self.message_user(
+    #         request,
+    #         f'Родительская папка назначена для {count_updated} записи(ей)'
+    #     )

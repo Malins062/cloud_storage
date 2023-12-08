@@ -32,6 +32,7 @@ INSTALLED_APPS += [
     'djoser',
     'phonenumber_field',
     'mptt',
+    'django_mptt_admin',
 ]
 
 # Apps
