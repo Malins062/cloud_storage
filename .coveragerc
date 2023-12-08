@@ -1,2 +1,5 @@
 [run]
 omit=tests/*,.venv/*,config/*,manage.py,*tests.py,*/migrations/*
+
+[report]
+show_missing=true
