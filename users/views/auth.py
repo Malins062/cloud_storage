@@ -12,7 +12,7 @@ from rest_framework.status import HTTP_204_NO_CONTENT
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from config.settings import TITLES
+from config.settings import SPECTACULAR_SETTINGS
 # from common.views.mixins import ListViewSet
 # from users.permissions import IsNotCorporate
 from users.serializers.api import auth as user_s
@@ -21,7 +21,7 @@ User = get_user_model()
 
 
 @extend_schema_view(
-    post=extend_schema(summary='Регистрация пользователя', tags=[TITLES.SCHEMA_VIEW.TAGS.AUTH]),
+    post=extend_schema(summary='Регистрация пользователя', tags=[SPECTACULAR_SETTINGS['TITLES_TAGS']['AUTH']]),
 )
 class RegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -30,7 +30,7 @@ class RegistrationView(generics.CreateAPIView):
 
 
 @extend_schema_view(
-    post=extend_schema(summary='Смена пароля', tags=[TITLES.SCHEMA_VIEW.TAGS.AUTH]),
+    post=extend_schema(summary='Смена пароля', tags=[SPECTACULAR_SETTINGS['TITLES_TAGS']['AUTH']]),
 )
 class ChangePasswordView(APIView):
     serializer_class = user_s.ChangePasswordSerializer
