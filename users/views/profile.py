@@ -20,13 +20,11 @@ from users.serializers.api import profile as user_s
 User = get_user_model()
 
 
+@extend_schema(tags=[SPECTACULAR_SETTINGS['TITLES_TAGS']['PROFILE']])
 @extend_schema_view(
-    get=extend_schema(summary='Профиль пользователя',
-                      tags=[SPECTACULAR_SETTINGS['TITLES_TAGS']['PROFILE']]),
-    put=extend_schema(summary='Изменение профиля пользователя',
-                      tags=[SPECTACULAR_SETTINGS['TITLES_TAGS']['PROFILE']]),
-    patch=extend_schema(summary='Частичное изменение профиля пользователя',
-                        tags=[SPECTACULAR_SETTINGS['TITLES_TAGS']['PROFILE']]),
+    get=extend_schema(summary='Профиль пользователя',),
+    put=extend_schema(summary='Изменение профиля пользователя',),
+    patch=extend_schema(summary='Частичное изменение профиля пользователя',),
 )
 class ListView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()

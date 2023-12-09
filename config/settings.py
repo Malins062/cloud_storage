@@ -173,8 +173,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # DRF SPECTACULAR SETTINGS
 ################################
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Облачное хранилище данных',
-    'DESCRIPTION': 'Backend сервиса файлового хранилища данных',
+    'TITLE': 'API-сервис файлового хранилища данных',
+    'DESCRIPTION': 'Полное описание REST API доступа к сервису',
     'VERSION': '1.0.0',
 
     'SERVE_PERMISSIONS': [
@@ -189,8 +189,10 @@ SPECTACULAR_SETTINGS = {
     'SWAGGER_UI_SETTINGS': {
         'DeepLinking': True,
         'DisplayOperationId': True,
+        'filter': True,
     },
 
+    'SERVE_INCLUDE_SCHEMA': False,
     'COMPONENT_SPLIT_REQUEST': True,
     'SORT_OPERATIONS': False,
 

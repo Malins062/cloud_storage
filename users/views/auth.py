@@ -2,8 +2,8 @@ import pdb
 
 from django.contrib.auth import get_user_model
 from django.db.models import Q
-from drf_spectacular.utils import extend_schema_view, extend_schema
-from rest_framework import generics
+from drf_spectacular.utils import extend_schema_view, extend_schema, OpenApiExample
+from rest_framework import generics, status
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -21,7 +21,11 @@ User = get_user_model()
 
 
 @extend_schema_view(
-    post=extend_schema(summary='Регистрация пользователя', tags=[SPECTACULAR_SETTINGS['TITLES_TAGS']['AUTH']]),
+    post=extend_schema(
+        summary='Регистрация пользователя',
+        tags=[SPECTACULAR_SETTINGS['TITLES_TAGS']['AUTH']],
+        description='Регистрация и создание нового пользователя с пользовательскими правами',
+    ),
 )
 class RegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
