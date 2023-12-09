@@ -12,6 +12,7 @@ from rest_framework.status import HTTP_204_NO_CONTENT
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
+from config.settings import TITLES
 # from common.views.mixins import ListViewSet
 # from users.permissions import IsNotCorporate
 from users.serializers.api import profile as user_s
@@ -20,9 +21,9 @@ User = get_user_model()
 
 
 @extend_schema_view(
-    get=extend_schema(summary='Профиль пользователя', tags=['Пользователи']),
-    put=extend_schema(summary='Изменение профиля пользователя', tags=['Пользователи']),
-    patch=extend_schema(summary='Частичное изменение профиля пользователя', tags=['Пользователи']),
+    get=extend_schema(summary='Профиль пользователя', tags=[TITLES.SCHEMA_VIEW.TAGS.PROFILE]),
+    put=extend_schema(summary='Изменение профиля пользователя', tags=[TITLES.SCHEMA_VIEW.TAGS.PROFILE]),
+    patch=extend_schema(summary='Частичное изменение профиля пользователя', tags=[TITLES.SCHEMA_VIEW.TAGS.PROFILE]),
 )
 class ListView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()

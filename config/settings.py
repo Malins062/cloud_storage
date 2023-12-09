@@ -230,3 +230,12 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=1),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=7),
 }
+
+TITLES = {
+    'SCHEMA_VIEW': {
+        'TAGS': {
+            'AUTH': 'Аутентификация и авторизация',
+            'PROFILE': 'Пользователь'
+        }
+    }
+}
