@@ -197,6 +197,7 @@ SPECTACULAR_SETTINGS = {
     'SORT_OPERATIONS': False,
 
     'TITLES_TAGS': {
+        'STORAGE': 'Хранилище',
         'AUTH': 'Аутентификация и авторизация',
         'PROFILE': 'Пользователь'
     },
