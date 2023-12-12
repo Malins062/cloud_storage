@@ -19,7 +19,7 @@ User = get_user_model()
 
 # Path to user files
 def get_upload_path(instance, filename):
-    return f'user_{instance.created_by.id}/{filename}'
+    return f'user_{instance.owner.id}/{filename}'
 
 
 class File(InfoEntityModelMixin,
@@ -28,7 +28,7 @@ class File(InfoEntityModelMixin,
     content = models.FileField(verbose_name='Файл',
                                null=False, blank=False,
                                upload_to=get_upload_path, storage=fs, )
-    folder = TreeForeignKey(to=Folder, on_delete=models.CASCADE,
+    parent = TreeForeignKey(to=Folder, on_delete=models.CASCADE,
                             null=True, blank=True, related_name='files', )
 
     class Meta:
@@ -37,7 +37,7 @@ class File(InfoEntityModelMixin,
         ordering = ['-created_at']
 
     class MPTTMeta:
-        order_insertion_by = ['file']
+        order_insertion_by = ['content']
 
     def __str__(self):
-        return self.file.name
+        return self.content.name

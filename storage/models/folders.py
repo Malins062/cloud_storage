@@ -13,6 +13,7 @@ User = get_user_model()
 class Folder(InfoEntityModelMixin,
              DateModelMixin,
              MPTTModel):
+    name = models.CharField(verbose_name='Наименование', max_length=255, blank=False, null=False, )
     parent = TreeForeignKey(to='self', on_delete=models.CASCADE,
                             null=True, blank=True, related_name='children', )
 
