@@ -11,13 +11,13 @@ from .models.folders import Folder
 
 @admin.register(File)
 class FileAdmin(admin.ModelAdmin):
-    list_display = ['id', 'file', 'created_at', ]
+    list_display = ['id', 'content', 'created_at', ]
     list_display_links = ['id', 'created_at', ]
-    list_filter = ['file', 'created_at', ]
-    search_fields = ['file', 'created_at', ]
-    ordering = ['file']
+    list_filter = ['content', 'created_at', ]
+    search_fields = ['content', 'created_at', ]
+    ordering = ['content']
     # exclude = ('owner', )
-    readonly_fields = ['created_at', 'created_by', 'updated_at', 'updated_by', ]
+    readonly_fields = ['owner', 'created_at', 'updated_at', ]
     list_per_page = 20
 
     # def get_form(self, request, obj=None, **kwargs):
@@ -57,10 +57,9 @@ class FolderAdmin(DjangoMpttAdmin):
     list_display = [
         # 'id', 'parent_id', 'tree_id', 'level',
         'name',
+        'owner',
         'created_at',
-        'created_by',
         'updated_at',
-        'updated_by',
     ]
     list_display_links = [
         'name',
@@ -72,7 +71,7 @@ class FolderAdmin(DjangoMpttAdmin):
     # ordering = ['name']
     # inlines = [FolderScopeInline]
     # exclude = ('owner', )
-    readonly_fields = ['created_at', 'created_by', 'updated_at', 'updated_by', ]
+    readonly_fields = ['owner', 'created_at', 'updated_at', ]
     # actions = ['set_parent_folder']
     list_per_page = 20
 

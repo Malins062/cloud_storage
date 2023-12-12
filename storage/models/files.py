@@ -5,9 +5,10 @@ from django.core.files.storage import FileSystemStorage
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
 
-from common.models.mixins import InfoModelMixin
+from common.models.mixins import DateModelMixin
 from config.settings import MEDIA_ROOT
 from storage.models.folders import Folder
+from storage.models.mixins import InfoEntityModelMixin
 
 # Path to file storage
 fs = FileSystemStorage(location=os.path.join(MEDIA_ROOT, 'fs'))
@@ -21,14 +22,14 @@ def get_upload_path(instance, filename):
     return f'user_{instance.created_by.id}/{filename}'
 
 
-class File(InfoModelMixin, MPTTModel):
-    # owner = models.ForeignKey(to=User, on_delete=models.CASCADE,
-    #                           null=False, blank=False,
-    #                           related_name='user', verbose_name='Владелец', )
-    file = models.FileField(verbose_name='Файл', null=False, blank=False,
-                            upload_to=get_upload_path, storage=fs, )
-    parent = TreeForeignKey(to=Folder, on_delete=models.CASCADE,
-                            null=True, blank=True, related_name='folder', )
+class File(InfoEntityModelMixin,
+           DateModelMixin,
+           MPTTModel):
+    content = models.FileField(verbose_name='Файл',
+                               null=False, blank=False,
+                               upload_to=get_upload_path, storage=fs, )
+    folder = TreeForeignKey(to=Folder, on_delete=models.CASCADE,
+                            null=True, blank=True, related_name='files', )
 
     class Meta:
         verbose_name = 'Файл'
