@@ -19,7 +19,7 @@ User = get_user_model()
 
 # Path to user files
 def get_upload_path(instance, filename):
-    return f'user_{instance.owner.id}/{filename}'
+    return os.path.join(f'user_{instance.owner.id}', filename)
 
 
 class File(InfoEntityModelMixin,
